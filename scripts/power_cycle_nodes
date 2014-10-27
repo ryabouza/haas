@@ -14,14 +14,23 @@
 # express or implied. See the License for the specific language
 # governing permissions and limitations under the License.
 
-"""This is a simple script that can be used to power cycle all nodes registered in the HaaS."""
+"""This is a simple script that can be used to power cycle all nodes
+   belonging to a HaaS project."""
 
-from haas import api
+from haas import cli
+from haas import config
+from cStringIO import StringIO
+import sys
+import json
 
+config.load()
 if len(sys.argv) < 2:
     print('Usage:  power_cycle_nodes <project>')
 else:
     project = sys.argv[1]
-    nodes = json.loads(api.list_free_nodes(project))
+    sys.stdout = mystdout = StringIO()      # redirect cli ouput to buffer
+    cli.list_project_nodes(project)
+    sys.stdout = sys.__stdout__             # reset sdout
+    nodes = json.loads(mystdout.getvalue()) # read buffer
     for node in nodes:
-        api.node_power_cycle(node)
+        cli.node_power_cycle(node)
