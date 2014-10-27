@@ -21,6 +21,6 @@ setup(name='haas',
       version='1.0',
       url='https://github.com/CCI-MOC/haas',
       packages=find_packages(),
-      scripts=['scripts/haas', 'scripts/create_bridges'],
+      scripts=['scripts/haas', 'scripts/create_bridges', 'scripts/register_layout'],
       install_requires=requirements,
       )
