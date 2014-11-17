@@ -661,6 +661,22 @@ def port_detach_nic(port):
     db.commit()
 
 
+@rest_call('GET', '/projects')
+def list_projects():
+    """List all projects and nodes that belong to them.
+
+    Returns a JSON array of objects representing a list of projects.
+
+    Example:  '[{"nodes": ["node1", "node2"], "name": "project1"},
+                {"nodes": ["node3", "node4"], "name": "project2"}]'
+    """
+    db = model.Session()
+    projects = db.query(model.Project).all()
+    projects = [{'name': p.label, 'nodes': [n.label for n in p.nodes]}
+                for p in projects]
+    return json.dumps(projects)
+
+
 @rest_call('GET', '/free_nodes')
 def list_free_nodes():
     """List all nodes not in any project.
