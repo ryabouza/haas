@@ -35,7 +35,7 @@ setup(name='haas',
       install_requires=requirements,
       classifiers=[
           'Development Status :: 3 - Alpha',
-          'Environment :: Console'
+          'Environment :: Console',
           'Topic :: System :: Systems Administration',
           'Intended Audience :: System Administrators',
           'Natural Language :: English',
